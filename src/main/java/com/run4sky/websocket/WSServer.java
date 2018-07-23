@@ -2,11 +2,6 @@ package com.run4sky.websocket;
 
 
 import java.io.IOException;
-import java.io.StringReader;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,9 +11,6 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
 import com.run4sky.entities.Device;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
