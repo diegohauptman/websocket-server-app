@@ -1,4 +1,5 @@
-com/run4sky/websocket/DeviceSessionHandler.class
-com/run4sky/json/JsonEncoder.class
-com/run4sky/websocket/WSServer.class
-com/run4sky/entities/Device.class
+com\run4sky\json\JsonEncoder.class
+com\run4sky\websocket\DeviceSessionHandler.class
+com\run4sky\websocket\WSServer.class
+com\run4sky\entities\Device.class
+com\run4sky\json\JsonDecoder.class

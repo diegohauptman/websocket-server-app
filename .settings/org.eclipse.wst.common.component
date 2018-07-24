@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
             
     
-    <wb-module deploy-name="PuntoCeroServerMaven">
+    <wb-module deploy-name="PuntoCeroServerMavenjdk10">
                         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
@@ -17,7 +17,7 @@
                         
         
         <property name="java-output-path" value="/PuntoCeroServerMaven/target/classes"/>
-        <property name="context-root" value="PuntoCeroServerMaven"/>
+        <property name="context-root" value="PuntoCeroServerMavenjdk10"/>
                     
     
     </wb-module>

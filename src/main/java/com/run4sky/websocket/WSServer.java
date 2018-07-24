@@ -43,7 +43,7 @@ public class WSServer {
     private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
     
     /**
-     * Método que se ejecuta justo al iniciar la conexion 
+     * M�todo que se ejecuta justo al iniciar la conexion 
      * con el Websocket, antes de cualquier otra cosa.
      * 
      * Por parámetros recibimos la session y la String "connection-type" para añadirlos al Hashmap 
