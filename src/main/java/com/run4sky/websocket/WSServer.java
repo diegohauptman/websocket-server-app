@@ -38,8 +38,8 @@ import com.run4sky.json.JsonEncoder;
 				decoders = {JsonDecoder.class})
 public class WSServer {
    private Session session;
-    
-    //Clase singleton que gestionar√° las sesiones.
+   
+    //Clase singleton que gestionar·° las sesiones.
     private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
     
     /**
