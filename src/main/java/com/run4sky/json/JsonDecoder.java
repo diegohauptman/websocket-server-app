@@ -14,6 +14,7 @@ public class JsonDecoder implements Decoder.Text<JsonObject> {
     @Override
     public JsonObject decode(String s) throws DecodeException {
         return gson.fromJson(s, JsonObject.class);
+        
     }
  
     @Override

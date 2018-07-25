@@ -2,6 +2,9 @@ package com.run4sky.websocket;
 
 
 import java.io.IOException;
+import java.util.logging.Logger;
+
+import javax.websocket.CloseReason;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -11,6 +14,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.JsonObject;
 import com.run4sky.entities.Device;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
@@ -37,10 +41,13 @@ import com.run4sky.json.JsonEncoder;
 				encoders = {JsonEncoder.class},
 				decoders = {JsonDecoder.class})
 public class WSServer {
-   private Session session;
+	
+	private Session session;
    
     //Clase singleton que gestionará¡ las sesiones.
     private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
+    
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     
     /**
      * Método que se ejecuta justo al iniciar la conexion 
@@ -69,12 +76,11 @@ public class WSServer {
      * @return
      */
     @OnMessage
-    public void onMessage(com.google.gson.JsonObject jsonMessage, Session session, @PathParam("connection-type") String connectionType) {
+    public void onMessage(JsonObject jsonMessage, Session session, @PathParam("connection-type") String connectionType) {
     	this.session = session;
         //Aqui se definen protocolos con switch case.
         
-        
-    	System.out.println("Mensage cliente: " + jsonMessage.toString());
+        	System.out.println("Mensage Json cliente: " + jsonMessage.toString());
     	
     	//crea un objeto Device 
         Device device = new Device();
@@ -108,9 +114,12 @@ public class WSServer {
      *
      */
     @OnClose
-    public void onClose(Session session, @PathParam("connection-type") String connectionType) {
+    public void onClose(Session session, @PathParam("connection-type") String connectionType, CloseReason closeReason) {
+    	
+    	logger.info(String.format("Sesion %s ha cerrado porque %s", session.getId(), closeReason));
         System.out.println("Session: " + session.getId()+ " cerrando...");
         sessionHandler.removeSession(session, connectionType);
+        
         
     }
 
@@ -140,7 +149,7 @@ public class WSServer {
         */
     	
     	//JsonObject de Google Gson
-    	com.google.gson.JsonObject gsonObject = new com.google.gson.JsonObject();
+    	JsonObject gsonObject = new JsonObject();
     	gsonObject.addProperty("GSON", "Hello GSON");
     	gsonObject.addProperty("Session", this.session.getId());
     	System.out.println("Gson message: " + gsonObject.toString());
