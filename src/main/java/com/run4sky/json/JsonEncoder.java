@@ -10,6 +10,13 @@ import com.google.gson.JsonObject;
 
 
 public class JsonEncoder implements Encoder.Text<JsonObject>  {
+	
+	private static Gson gson = new Gson();
+	
+	@Override
+	public String encode(JsonObject object) throws EncodeException {
+		return gson.toJson(object);
+	}
 
 	@Override
 	public void init(EndpointConfig endpointConfig) {
@@ -28,10 +35,7 @@ public class JsonEncoder implements Encoder.Text<JsonObject>  {
 //        }
 //	}
 
-	@Override
-	public String encode(JsonObject object) throws EncodeException {
-		return object.toString();
-	}
+	
 
 	
 
