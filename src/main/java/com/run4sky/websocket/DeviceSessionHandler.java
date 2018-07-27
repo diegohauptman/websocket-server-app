@@ -2,6 +2,7 @@ package com.run4sky.websocket;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,25 +136,32 @@ public class DeviceSessionHandler {
     }
 
     public void removeSession(Session session, String connectionType) {
+    	
+    	List<Session> sessionsList = Collections.synchronizedList(new ArrayList<>());
+    	String key;
+    	Session leavingSession = null;
+    	
         for (Map.Entry<String, List<Session>> entry : sessionsMap.entrySet()) {
-            String key = entry.getKey();
-            List<Session> sessionsList;
+            key = entry.getKey();
             if (key.equals(connectionType)) {
                 sessionsList = sessionsMap.get(key);
                 for (Session session1 : sessionsList) {
                     System.out.println("SessionList before removal: " + session1.getId());
                 }
-                for (Session session1 : sessionsList) {
-                    //System.out.println("SessionList: " + session1.getId());
-                    if (session1.getId().equals(session.getId())) {
-                        sessionsList.remove(session);
-                        System.out.println("Removed session " + session.getId());
-                        for (Session session2 : sessionsList) {
-                            System.out.println("SessionList after removal: " + session2.getId());
-                        }
-                    }
-                }
             }
+        }
+        
+        for (Session session1 : sessionsList) {
+            //System.out.println("SessionList: " + session1.getId());
+            if (session1.getId().equals(session.getId())) {
+            	leavingSession = session;
+            }
+        }
+        
+        sessionsList.remove(session);
+        System.out.println("Removed session " + leavingSession.getId());
+        for (Session session2 : sessionsList) {
+            System.out.println("SessionList after removal: " + session2.getId());
         }
     }
 }
