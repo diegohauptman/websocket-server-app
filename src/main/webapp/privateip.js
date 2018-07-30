@@ -44,5 +44,5 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
 // Usage
 
 getUserIP(function(ip){
-		document.getElementById("ip").innerHTML = 'Ya tengo tu IP interna! >>> '  + ip;
+		document.getElementById("ip").innerHTML = "Ya tengo tu IP interna! >>> "  + ip;
 });

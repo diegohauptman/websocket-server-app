@@ -1,6 +1,9 @@
 
 var echo_websocket;
-            
+var myIp;
+getUserIP(function(ip){
+    myIp = ip;
+});
             function init() {
                 output = document.getElementById("output");
             }
@@ -10,6 +13,7 @@ var echo_websocket;
                 var connection_type = update_connection();
                 var wsUri = "ws://85.214.108.235:8080/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
                 //var wsUri = "ws://localhost:8080/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
+                //var wsUri = "ws://localhost:8080/PuntoCeroServerMaven/endpoint/" + connection_type;
                 console.log(wsUri);
                 writeToScreen("Connecting to " + wsUri);
                 echo_websocket = new WebSocket(wsUri);
@@ -56,8 +60,8 @@ var echo_websocket;
             	
                 var json = {
                     text: message,
-                    mac: "a2:b4:c6:d8:e8:f6",
-                    ip: "192.168.0.0"
+                    mac: "not possible to get mac with javascript",
+                    ip: myIp
                 };
                 message = JSON.stringify(json);
                 echo_websocket.send(message);

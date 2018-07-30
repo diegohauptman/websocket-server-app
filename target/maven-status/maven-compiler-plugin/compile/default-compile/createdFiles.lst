@@ -1,5 +1,7 @@
-com\run4sky\json\JsonEncoder.class
-com\run4sky\websocket\DeviceSessionHandler.class
-com\run4sky\websocket\WSServer.class
-com\run4sky\entities\Device.class
-com\run4sky\json\JsonDecoder.class
+com/run4sky/network/GetPublicIP.class
+com/run4sky/websocket/DeviceSessionHandler.class
+com/run4sky/websocket/ServerConfigurator.class
+com/run4sky/json/JsonDecoder.class
+com/run4sky/json/JsonEncoder.class
+com/run4sky/websocket/WSServer.class
+com/run4sky/entities/Device.class
