@@ -11,7 +11,8 @@ getUserIP(function(ip){
             function open_connection(){
                 
                 var connection_type = update_connection();
-                var wsUri = "ws://85.214.108.235:8080/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
+                var wsUri = "wss://85.214.108.235:8443/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
+                //var wsUri = "ws://85.214.108.235:8080/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
                 //var wsUri = "ws://localhost:8080/PuntoCeroServerMavenjdk10/endpoint/" + connection_type;
                 //var wsUri = "ws://localhost:8080/PuntoCeroServerMaven/endpoint/" + connection_type;
                 console.log(wsUri);
