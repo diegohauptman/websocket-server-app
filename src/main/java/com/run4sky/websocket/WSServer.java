@@ -17,6 +17,7 @@ import javax.websocket.server.ServerEndpoint;
 import javax.websocket.server.ServerEndpointConfig;
 
 import com.google.gson.JsonObject;
+import com.run4sky.beans.SecureDisp;
 import com.run4sky.entities.Device;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
@@ -93,18 +94,16 @@ public class WSServer {
 		this.sendJsonMessage();
 
 		// crea un objeto Device
-		Device device = new Device();
+		
 		String mac = jsonMessage.get("mac").getAsString();
 		String privateIp = jsonMessage.get("private ip").getAsString();
 		String publicIp = jsonMessage.get("public ip").getAsString();
-
-		device.setMacAddress(mac);
-		device.setPrivateIp(privateIp);
-		device.setPublicIp(publicIp);
-
-		System.out.println("Device mac: " + device.getMacAddress() 
-						+ "\nDevice Private Ip: " + device.getPrivateIp()
-						+ "\nDevice Public Ip: " + device.getPublicIp());
+		String os = jsonMessage.get("os").getAsString();
+		String cpuModel = jsonMessage.get("cpuModel").getAsString();
+		int numberOfCPU = jsonMessage.get("numberOfCPU").getAsInt();
+		long memoryQuantity = jsonMessage.get("memoryQuantity").getAsLong();
+		
+		
 
 		// envia un mensage de texto al cliente
 		// this.sendTextMessage("Hola, soy el servidor y he recebido su mensaje: " +
