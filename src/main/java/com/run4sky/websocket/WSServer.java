@@ -46,7 +46,7 @@ public class WSServer {
 	//FIXME private ServerEndpointConfig endpointConfig;
 	
 	private Session session;
-	// Clase singleton que gestionar� las sesiones.
+	// Clase singleton que gestiona las sesiones.
 	private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -74,9 +74,9 @@ public class WSServer {
 	}
 
 	/**
-	 * Método que se ejecuta al recibir mensages del cliente (recibe en String y se
-	 * convertirá a Json) al que el servidor contestará a la sesión correcta en este
-	 * mismo método enviando también objetos Json.
+	 * Metodo que se ejecuta al recibir mensages del cliente (recibe en String y se
+	 * converte a Json) al que el servidor contesta a la sesion correcta en este
+	 * mismo metodo enviando tambien objetos Json.
 	 * 
 	 * @param message
 	 * @param session
@@ -88,13 +88,9 @@ public class WSServer {
 			@PathParam("connection-type") String connectionType) {
 
 		this.session = session;
-
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
-
-		this.sendJsonMessage();
-
-		// crea un objeto Device
 		
+		String protocol = jsonMessage.get("protocol").getAsString();
 		String mac = jsonMessage.get("mac").getAsString();
 		String privateIp = jsonMessage.get("private ip").getAsString();
 		String publicIp = jsonMessage.get("public ip").getAsString();
@@ -102,6 +98,15 @@ public class WSServer {
 		String cpuModel = jsonMessage.get("cpuModel").getAsString();
 		int numberOfCPU = jsonMessage.get("numberOfCPU").getAsInt();
 		long memoryQuantity = jsonMessage.get("memoryQuantity").getAsLong();
+		
+		switch (protocol) {
+		case "100":
+			logger.info("dentro del protocolo 100");
+			break;
+
+		default:
+			break;
+		}
 		
 		
 
