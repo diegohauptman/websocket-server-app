@@ -1,6 +1,9 @@
 package com.run4sky.websocket;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.websocket.CloseReason;
@@ -22,6 +25,7 @@ import com.run4sky.entities.Device;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
 import com.run4sky.network.GetPublicIP;
+import com.run4sky.queries.DBQuery;
 
 /**
  * Clase del Websocket Enpoint Server. Aqui se gerencia el ciclo de vida del
@@ -91,20 +95,15 @@ public class WSServer {
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
 		
 		String protocol = jsonMessage.get("protocol").getAsString();
-		String mac = jsonMessage.get("mac").getAsString();
-		String privateIp = jsonMessage.get("private ip").getAsString();
-		String publicIp = jsonMessage.get("public ip").getAsString();
-		String os = jsonMessage.get("os").getAsString();
-		String cpuModel = jsonMessage.get("cpuModel").getAsString();
-		int numberOfCPU = jsonMessage.get("numberOfCPU").getAsInt();
-		long memoryQuantity = jsonMessage.get("memoryQuantity").getAsLong();
 		
 		switch (protocol) {
 		case "100":
+			prot100(jsonMessage);
 			logger.info("dentro del protocolo 100");
 			break;
 
 		default:
+			logger.info("default del switch");
 			break;
 		}
 		
@@ -167,4 +166,39 @@ public class WSServer {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 
+	 */
+	private SecureDisp prot100(JsonObject jsonMessage) {
+		
+		String mac = jsonMessage.get("mac").getAsString();
+		
+		//FIXME estas queries hay que cambiarlas para recibir parametros (???) (como se hace en Hibernate?)
+		String sqlSecureDisp = "FROM SecureDisp WHERE mac = " + mac;
+		String sqlInsernalService = "FROM InsernalService WHERE mac = " + mac;
+		
+		//Lista que recibe dispositivos que tiene esta Mac. En teoria tiene que ser uno solo.
+		List dispList = DBQuery.secureDispList(sqlSecureDisp);
+		
+		SecureDisp disp = new SecureDisp();
+		
+		if(dispList.size() == 1) {
+			for (Iterator<SecureDisp> iterator = dispList.iterator(); iterator.hasNext();){
+				disp = iterator.next(); 
+				System.out.println("ID: "+disp.getId());
+				
+				return disp;
+	         }
+		}
+		else if(dispList.size() > 1) {
+			logger.warning("Más de un dispositivo con esta Mac!");
+			for (Iterator<SecureDisp> iterator = dispList.iterator(); iterator.hasNext();) {
+				disp = iterator.next(); 
+		        System.out.println("ID: "+disp.getId());
+			}
+			
+		}
+		return null;
+	}
+	
 }

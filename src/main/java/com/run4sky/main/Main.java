@@ -8,7 +8,9 @@ package com.run4sky.main;
 import com.run4sky.beans.*;
 
 	public class Main {
+		
 	private static SessionFactory factory;
+	
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub
 			Main me = new Main();
