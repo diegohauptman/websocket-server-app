@@ -32,17 +32,12 @@ import com.run4sky.queries.DBQuery;
  * DeviceSessionHandler que contiene los métodos necesarios para guardar y
  * identificar cada sesion y su conexion correspondiente.
  * 
- * En el parámetro de ruta(@PathParam)
- * de @ServerEndpoint("/endpoint/{connection-type}") el device-type es el tipo
- * de dispositivo que el clinete enviará al servidor al iniciar la sesion
- * Websocket. Estos tipos de conexion pueden ser:
- * 
  * -internal: dentro de 0.run -external: -clientes: subnube -managers:
  * dispositivos especiales -"": dispositivo aun no registrado.
  * 
  * @author Diego
  */
-@ServerEndpoint(value = "/endpoint/{connection-type}", encoders = { JsonEncoder.class }, decoders = {
+@ServerEndpoint(value = "/endpoint", encoders = { JsonEncoder.class }, decoders = {
 		JsonDecoder.class }, configurator = ServerConfigurator.class)
 public class WSServer {
 
@@ -64,7 +59,7 @@ public class WSServer {
 	 * @param connectionType
 	 */
 	@OnOpen
-	public void onOpen(EndpointConfig config, Session session, @PathParam("connection-type") String connectionType) {
+	public void onOpen(EndpointConfig config, Session session, String connectionType) {
 		
 		//FIXME this.endpointConfig = (ServerEndpointConfig) config;
 		//FIXME ServerConfigurator configurator = (ServerConfigurator) endpointConfig.getConfigurator();
@@ -87,8 +82,7 @@ public class WSServer {
 	 * @return
 	 */
 	@OnMessage
-	public JsonObject onMessage(JsonObject jsonMessage, Session session,
-			@PathParam("connection-type") String connectionType) {
+	public JsonObject onMessage(JsonObject jsonMessage, Session session, String connectionType) {
 
 		this.session = session;
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
@@ -120,7 +114,7 @@ public class WSServer {
 	 * Cuando el cliente cierra la conexion.
 	 */
 	@OnClose
-	public void onClose(Session session, @PathParam("connection-type") String connectionType, CloseReason closeReason) {
+	public void onClose(Session session, String connectionType, CloseReason closeReason) {
 
 		System.out.println("Session: " + session.getId() + " cerrando...");
 		sessionHandler.removeSession(session, connectionType);
