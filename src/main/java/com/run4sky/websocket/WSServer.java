@@ -1,6 +1,8 @@
 package com.run4sky.websocket;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,11 +22,15 @@ import javax.websocket.server.ServerEndpoint;
 import javax.websocket.server.ServerEndpointConfig;
 
 import com.google.gson.JsonObject;
+import com.run4sky.beans.ClienService;
+import com.run4sky.beans.ExternalDisp;
+import com.run4sky.beans.InsernalService;
 import com.run4sky.beans.SecureDisp;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
 import com.run4sky.network.GetPublicIP;
-import com.run4sky.queries.DBQuery;
+import com.run4sky.queries.ProtocolsHandler;
+import com.run4sky.queries.GenericDAO;
 
 /**
  * Clase del Websocket Enpoint Server. Aqui se gerencia el ciclo de vida del
@@ -46,15 +52,13 @@ import com.run4sky.queries.DBQuery;
 		JsonDecoder.class }, configurator = ServerConfigurator.class)
 public class WSServer {
 
-	//FIXME private ServerEndpointConfig endpointConfig;
-	
 	private Session session;
 	// Clase singleton que gestiona las sesiones.
 	private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	/**
-	 * M�todo que se ejecuta justo al iniciar la conexion con el Websocket, antes de
+	 * Metodo que se ejecuta justo al iniciar la conexion con el Websocket, antes de
 	 * cualquier otra cosa.
 	 * 
 	 * Por parámetros recibimos la session y la String "connection-type" para
@@ -93,25 +97,20 @@ public class WSServer {
 		this.session = session;
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
 		
-		String protocol = jsonMessage.get("protocol").getAsString();
+		int protocol = jsonMessage.get("protocol").getAsInt();
 		
 		switch (protocol) {
-		case "100":
-			prot100(jsonMessage);
+		case 100:
 			logger.info("dentro del protocolo 100");
+			List<?> list = ProtocolsHandler.prot100(jsonMessage);
+			String deviceType = getDeviceType(list);
+			System.out.println("DeviceType: " + deviceType);
 			break;
-
 		default:
 			logger.info("default del switch");
 			break;
 		}
 		
-		
-
-		// envia un mensage de texto al cliente
-		// this.sendTextMessage("Hola, soy el servidor y he recebido su mensaje: " +
-		// message + "// tienes la sesión: " + session.getId());
-
 		return jsonMessage;
 
 	}
@@ -165,12 +164,25 @@ public class WSServer {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * 
-	 */
-	private SecureDisp prot100(JsonObject jsonMessage) {
-		
-		return null;
-	}
 	
+	public String getDeviceType(List list) {
+		Class<?> clazz = null;
+		Object object = null;
+		String objectClass = null;
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			object = (Object) iterator.next();
+			objectClass = object.getClass().getName();
+			System.out.println(object.toString());
+			clazz = object.getClass();
+		}
+		try {
+			Method getId = clazz.getMethod("getId");
+			int id = (int) getId.invoke(object);
+			System.out.println("ID del dispositivo: " + id);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return objectClass;
+		
+	}
 }

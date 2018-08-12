@@ -86,8 +86,8 @@ public class DeviceSessionHandler {
             sessionsMap.put(connectionType, clientSessionList);
             printSessionMap();
         }
-        if (session.getUserProperties().containsKey("anonymous")) {
-            System.out.println("Conexion Anonima:");
+        if (session.getUserProperties().containsKey("default")) {
+            System.out.println("Conexion default:");
             unsignedSessionList.add(session);
             sessionsMap.put(connectionType, unsignedSessionList);
             printSessionMap();

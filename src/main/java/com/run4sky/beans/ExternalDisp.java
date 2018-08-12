@@ -73,4 +73,14 @@ public class ExternalDisp implements java.io.Serializable {
 		this.ncpu = ncpu;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ExternalDisp [id=" + id + ", mac=" + mac + ", cpu=" + cpu + ", ram=" + ram + ", so=" + so + ", ncpu="
+				+ ncpu + "]";
+	}
+	
+	
 }
