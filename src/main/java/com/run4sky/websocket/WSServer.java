@@ -21,7 +21,6 @@ import javax.websocket.server.ServerEndpointConfig;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.SecureDisp;
-import com.run4sky.entities.Device;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
 import com.run4sky.network.GetPublicIP;
@@ -171,33 +170,6 @@ public class WSServer {
 	 */
 	private SecureDisp prot100(JsonObject jsonMessage) {
 		
-		String mac = jsonMessage.get("mac").getAsString();
-		
-		//FIXME estas queries hay que cambiarlas para recibir parametros (???) (como se hace en Hibernate?)
-		String sqlSecureDisp = "FROM SecureDisp WHERE mac = " + mac;
-		String sqlInsernalService = "FROM InsernalService WHERE mac = " + mac;
-		
-		//Lista que recibe dispositivos que tiene esta Mac. En teoria tiene que ser uno solo.
-		List dispList = DBQuery.secureDispList(sqlSecureDisp);
-		
-		SecureDisp disp = new SecureDisp();
-		
-		if(dispList.size() == 1) {
-			for (Iterator<SecureDisp> iterator = dispList.iterator(); iterator.hasNext();){
-				disp = iterator.next(); 
-				System.out.println("ID: "+disp.getId());
-				
-				return disp;
-	         }
-		}
-		else if(dispList.size() > 1) {
-			logger.warning("Más de un dispositivo con esta Mac!");
-			for (Iterator<SecureDisp> iterator = dispList.iterator(); iterator.hasNext();) {
-				disp = iterator.next(); 
-		        System.out.println("ID: "+disp.getId());
-			}
-			
-		}
 		return null;
 	}
 	

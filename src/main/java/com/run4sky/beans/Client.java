@@ -43,4 +43,17 @@ public class Client implements java.io.Serializable {
 		this.description = description;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Client" + System.lineSeparator()
+				+ "id=" + id + System.lineSeparator() 
+				+ "name=" + name + System.lineSeparator() 
+				+"description=" + description + "]";
+	}
+	
+	
+
 }

@@ -6,12 +6,15 @@ package com.run4sky.main;
 	import org.hibernate.cfg.Configuration;
 
 import com.run4sky.beans.*;
+import com.run4sky.queries.GenericDAO;
+
+import javassist.NotFoundException;
 
 	public class Main {
 		
 	private static SessionFactory factory;
 	
-		public static void main(String[] args) {
+		public static void main(String[] args) throws NotFoundException {
 			// TODO Auto-generated method stub
 			Main me = new Main();
 			
@@ -22,17 +25,40 @@ import com.run4sky.beans.*;
 				throw new ExceptionInInitializerError(ex);
 			}
 			
-			System.out.println("ID del client introduit: "+me.addClient(10, "Prova","Descripcio no inscrita" ));
-			me.listClientes();
-			System.out.println("Borran client 10");
-			me.deleteClient(10);
-			me.listClientes();
-			System.out.println("Update Descripcion");
-			me.updateClient(0, "atope");
-			me.listClientes();
+			GenericDAO dao = new GenericDAO();
+			Client client = new Client(3, "Otro mas", "test");
+			dao.save(client);
+			
+			
+			List<Client> list = dao.findByProperty(Client.class, "description", "test");
+			dao.printList(list);
+			Client client1 = dao.findById(Client.class, 1);
+			System.out.println(client1.toString());
+			dao.delete(Client.class, 4);
+			list = dao.findByProperty(Client.class, "description", "test");
+			dao.printList(list);
+			
+			
+			//System.out.println("ID del client introduit: "+me.addClient(10, "Prova","Descripcio no inscrita" ));
+			//me.listClientes();
+			//System.out.println("Borran client 10");
+			//me.deleteClient(10);
+			//me.listClientes();
+			//System.out.println("Update Descripcion");
+			//me.updateClient(0, "atope");
+			//me.listClientes();
 			
 			factory.close();
 		}
+		
+		public <T> void printList(List<T> list) {
+			for (Iterator<T> iterator = list.iterator(); iterator.hasNext();){
+	        	 T t = iterator.next(); 
+	           System.out.println(t.toString()
+	        		   +"\n________________________________________");
+	         }
+		}
+		
 		public void listClientes( ){
 		      Session session = factory.openSession();
 		      Transaction tx = null; 
