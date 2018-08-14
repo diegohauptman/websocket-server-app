@@ -27,14 +27,14 @@ import javassist.NotFoundException;
 			
 			GenericDAO dao = new GenericDAO();
 			Client client = new Client(3, "Otro mas", "test");
-			dao.save(client);
+			//dao.save(client);
 			
 			
 			List<Client> list = dao.findByProperty(Client.class, "description", "test");
 			dao.printList(list);
 			Client client1 = dao.findById(Client.class, 1);
 			System.out.println(client1.toString());
-			dao.delete(Client.class, 4);
+			//dao.delete(Client.class, 4);
 			list = dao.findByProperty(Client.class, "description", "test");
 			dao.printList(list);
 			

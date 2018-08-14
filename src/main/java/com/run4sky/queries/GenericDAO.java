@@ -20,7 +20,18 @@ import javassist.NotFoundException;
 public class GenericDAO {
 	
 	
-	private static SessionFactory factory = new Configuration().configure().buildSessionFactory();
+	private static SessionFactory factory;
+	
+	public GenericDAO(){
+		
+		try {
+			factory = new Configuration().configure().buildSessionFactory();
+		}catch(Throwable ex) {
+			System.err.println("Failed to create sessionFactory object. "+ ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		
+	}
 	
 	/**
 	 * Metodo generico para buscar datos en cualquier tabla/classe (objeto java)
@@ -66,7 +77,6 @@ public class GenericDAO {
 		} finally {
 			session.close();
 		}
-		
 	}
 	
 	/**

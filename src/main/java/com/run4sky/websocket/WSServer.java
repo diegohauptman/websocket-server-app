@@ -91,7 +91,7 @@ public class WSServer {
 	 * @return
 	 */
 	@OnMessage
-	public JsonObject onMessage(JsonObject jsonMessage, Session session,
+	public void onMessage(JsonObject jsonMessage, Session session,
 			@PathParam("connection-type") String connectionType) {
 
 		this.session = session;
@@ -105,14 +105,13 @@ public class WSServer {
 			List<?> list = ProtocolsHandler.prot100(jsonMessage);
 			String deviceType = getDeviceType(list);
 			System.out.println("DeviceType: " + deviceType);
+			sendJsonMessage(deviceType);
+			
 			break;
 		default:
 			logger.info("default del switch");
 			break;
 		}
-		
-		return jsonMessage;
-
 	}
 
 	/**
@@ -149,13 +148,14 @@ public class WSServer {
 		}
 	}
 
-	private void sendJsonMessage() {
+	private void sendJsonMessage(String deviceType) {
 
 		// JsonObject de Google Gson
 		JsonObject gsonObject = new JsonObject();
 		gsonObject.addProperty("Message", "Hola, soy el servidor y te envio tus datos");
 		gsonObject.addProperty("Session", this.session.getId());
 		gsonObject.addProperty("public IP", GetPublicIP.getPublicIP(session).toString());
+		gsonObject.addProperty("ConnectionType", deviceType);
 		System.out.println("Gson message: " + gsonObject.toString());
 
 		try {
