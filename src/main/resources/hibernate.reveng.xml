@@ -2,11 +2,23 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="ClienService"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="Client"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="ClientLocation"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="DispLocation"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="ExternalDisp"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="InsernalService"/>
-  <table-filter match-catalog="Ximds_EvilCorp" match-name="SecureDisp"/>
+	<table-filter match-name="ClienService"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
+	<table-filter match-name="Client" match-catalog="Ximds_EvilCorp"></table-filter>
+	<table-filter match-name="ClientLocation"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
+	<table-filter match-name="DispLocation"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
+	<table-filter match-name="ExternalDisp"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
+	<table-filter match-name="InsernalService"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
+	<table-filter match-name="SecureDisp"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
 </hibernate-reverse-engineering>
