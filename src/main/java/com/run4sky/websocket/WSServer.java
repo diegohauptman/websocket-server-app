@@ -140,7 +140,10 @@ public class WSServer {
 
 	}
 
-
+	/**
+	 * Construye un objeto Json e envia al cliente.
+	 * @param deviceType
+	 */
 	private void sendJsonMessage(String deviceType) {
 
 		// JsonObject de Google Gson
@@ -158,6 +161,11 @@ public class WSServer {
 		}
 	}
 	
+	/**
+	 * Metodo que devuelve el tipo de disposivo en una lista.
+	 * @param list
+	 * @return
+	 */
 	public String getDeviceType(List list) {
 		Class<?> clazz = null;
 		Object object = null;
