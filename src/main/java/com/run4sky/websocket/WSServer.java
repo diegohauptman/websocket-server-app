@@ -140,13 +140,6 @@ public class WSServer {
 
 	}
 
-	private void sendTextMessage(String message) {
-		try {
-			this.session.getBasicRemote().sendText(message);
-		} catch (IOException ioe) {
-			System.out.println("Error al enviar mensaje " + ioe.getMessage());
-		}
-	}
 
 	private void sendJsonMessage(String deviceType) {
 
