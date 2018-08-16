@@ -111,7 +111,10 @@ public class GenericDAO {
 		
 	}
 	
-	
+	/**
+	 * Metodo para imprimir una lista en consola.
+	 * @param list
+	 */
 	public <T> void printList(List<T> list) {
 		for (Iterator<T> iterator = list.iterator(); iterator.hasNext();){
         	 T t = iterator.next(); 
