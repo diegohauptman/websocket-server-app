@@ -9,12 +9,12 @@
         <property name="hibernate.connection.url">jdbc:mysql://85.214.108.235:3306/Ximds_EvilCorp</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping resource="com/run4sky/beans/Client.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/ClienService.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/SecureDisp.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/DispLocation.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/InsernalService.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/ExternalDisp.hbm.xml"/>
-        <mapping resource="com/run4sky/beans/ClientLocation.hbm.xml"/>
+        <mapping resource="/Client.hbm.xml"/>
+        <mapping resource="/ClienService.hbm.xml"/>
+        <mapping resource="/SecureDisp.hbm.xml"/>
+        <mapping resource="/DispLocation.hbm.xml"/>
+        <mapping resource="/InsernalService.hbm.xml"/>
+        <mapping resource="/ExternalDisp.hbm.xml"/>
+        <mapping resource="/ClientLocation.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
