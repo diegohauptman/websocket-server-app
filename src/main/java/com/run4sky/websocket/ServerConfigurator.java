@@ -1,7 +1,6 @@
 package com.run4sky.websocket;
 
 import java.net.URI;
-import java.security.Principal;
 
 import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;

@@ -3,7 +3,6 @@ package com.run4sky.websocket;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,18 +18,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import javax.websocket.server.ServerEndpointConfig;
 
 import com.google.gson.JsonObject;
-import com.run4sky.beans.ClienService;
-import com.run4sky.beans.ExternalDisp;
-import com.run4sky.beans.InsernalService;
-import com.run4sky.beans.SecureDisp;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
 import com.run4sky.network.GetPublicIP;
 import com.run4sky.queries.ProtocolsHandler;
-import com.run4sky.queries.GenericDAO;
 
 /**
  * Clase del Websocket Enpoint Server. Aqui se gerencia el ciclo de vida del
@@ -69,10 +62,7 @@ public class WSServer {
 	 */
 	@OnOpen
 	public void onOpen(EndpointConfig config, Session session, @PathParam("connection-type") String connectionType) {
-		
-		//FIXME this.endpointConfig = (ServerEndpointConfig) config;
-		//FIXME ServerConfigurator configurator = (ServerConfigurator) endpointConfig.getConfigurator();
-		
+
 		System.out.println("Ip Externo: " + GetPublicIP.getPublicIP(session).toString());
 		this.session = session;
 		System.out.println("Session: " + session.getId() + "\n Conexion: " + connectionType);
@@ -96,17 +86,18 @@ public class WSServer {
 
 		this.session = session;
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
-		
+
 		int protocol = jsonMessage.get("protocol").getAsInt();
-		
+
 		switch (protocol) {
 		case 100:
 			logger.info("dentro del protocolo 100");
 			List<?> list = ProtocolsHandler.prot100(jsonMessage);
 			String deviceType = getDeviceType(list);
+			logger.info("DeviceType: " + deviceType);
 			System.out.println("DeviceType: " + deviceType);
 			sendJsonMessage(deviceType);
-			
+
 			break;
 		default:
 			logger.info("default del switch");
@@ -142,6 +133,7 @@ public class WSServer {
 
 	/**
 	 * Construye un objeto Json e envia al cliente.
+	 * 
 	 * @param deviceType
 	 */
 	private void sendJsonMessage(String deviceType) {
@@ -160,9 +152,10 @@ public class WSServer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Metodo que devuelve el tipo de disposivo en una lista.
+	 * 
 	 * @param list
 	 * @return
 	 */
@@ -173,17 +166,25 @@ public class WSServer {
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			object = (Object) iterator.next();
 			objectClass = object.getClass().getName();
-			System.out.println(object.toString());
+			logger.info("Tipo de dispositivo: " + object.toString());
+			System.out.println("Tipo de dispositivo: " + object.toString());
 			clazz = object.getClass();
 		}
-		try {
-			Method getId = clazz.getMethod("getId");
-			int id = (int) getId.invoke(object);
-			System.out.println("ID del dispositivo: " + id);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
+		// Si el dispositivo ha sido encontrado (object != String) recoje su id y
+		// imprime en consola.
+		if (!(object instanceof String)) {
+			try {
+				Method getId = clazz.getMethod("getId");
+				int id = (int) getId.invoke(object);
+				logger.info("ID del dispositivo: " + id);
+				System.out.println("ID del dispositivo: " + id);
+
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
 		}
 		return objectClass;
-		
+
 	}
 }

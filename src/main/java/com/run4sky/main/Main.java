@@ -1,11 +1,14 @@
 package com.run4sky.main;
 	import java.util.Iterator;
-	import java.util.List;
+import java.util.List;
 
-	import org.hibernate.*;
-	import org.hibernate.cfg.Configuration;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import com.run4sky.beans.*;
+import com.run4sky.beans.Client;
 import com.run4sky.queries.GenericDAO;
 
 import javassist.NotFoundException;
