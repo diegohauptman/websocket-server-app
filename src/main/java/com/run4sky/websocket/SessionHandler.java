@@ -23,7 +23,7 @@ import org.json.JSONObject;
  *
  * @author user
  */
-public class DeviceSessionHandler {
+public class SessionHandler {
 
     private static final Map<String, List<Session>> sessionsMap = new HashMap<>();
 
@@ -33,14 +33,14 @@ public class DeviceSessionHandler {
     private static final List<Session> clientSessionList = new ArrayList<>();
     private static final List<Session> unsignedSessionList = new ArrayList<>();
 
-    private static DeviceSessionHandler instance;
+    private static SessionHandler instance;
 
-    private DeviceSessionHandler() {
+    private SessionHandler() {
     }
 
-    public static DeviceSessionHandler getInstance() {
+    public static SessionHandler getInstance() {
         if (instance == null) {
-            instance = new DeviceSessionHandler();
+            instance = new SessionHandler();
         }
 
         return instance;
@@ -63,32 +63,32 @@ public class DeviceSessionHandler {
         //Si el dispositivo no esta registrado, el ID será la MacAddress
         System.out.println("Entra en el metodo addSession.");
 
-        if (session.getUserProperties().containsKey("internal")) {
-            System.out.println("Conexion Interna:");
+        if (session.getUserProperties().containsKey("com.run4sky.beans.InsernalService")) {
+            System.out.println("InternalService");
             internalDevicesSessionList.add(session);
             sessionsMap.put(connectionType, internalDevicesSessionList);
             printSessionMap();
         }
-        if (session.getUserProperties().containsKey("external")) {
-            System.out.println("Conexion Externa:");
+        if (session.getUserProperties().containsKey("com.run4sky.beans.ExternalDisp")) {
+            System.out.println("ExternalDisp");
             externalDevicesSessionList.add(session);
             sessionsMap.put(connectionType, externalDevicesSessionList);
             printSessionMap();
         }
-        if (session.getUserProperties().containsKey("managers")) {
-            System.out.println("Conexion Managers/Especial:");
+        if (session.getUserProperties().containsKey("com.run4sky.beans.SecureDisp")) {
+            System.out.println("SecureDisp");
             managersSessionList.add(session);
             sessionsMap.put(connectionType, managersSessionList);
             printSessionMap();
         }
-        if (session.getUserProperties().containsKey("client")) {
-            System.out.println("Conexion Cliente:");
+        if (session.getUserProperties().containsKey("com.run4sky.beans.ClienService")) {
+            System.out.println("ClienService");
             clientSessionList.add(session);
             sessionsMap.put(connectionType, clientSessionList);
             printSessionMap();
         }
-        if (session.getUserProperties().containsKey("default")) {
-            System.out.println("Conexion default:");
+        if (session.getUserProperties().containsKey("java.lang.String")) {
+            System.out.println("Conexion no registrada!");
             unsignedSessionList.add(session);
             sessionsMap.put(connectionType, unsignedSessionList);
             printSessionMap();

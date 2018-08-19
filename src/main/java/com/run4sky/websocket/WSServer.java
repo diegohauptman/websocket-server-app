@@ -16,7 +16,6 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.JsonObject;
@@ -28,26 +27,19 @@ import com.run4sky.queries.ProtocolsHandler;
 /**
  * Clase del Websocket Enpoint Server. Aqui se gerencia el ciclo de vida del
  * WebSocket por métodos anotados. Se crea un objeto de la clase
- * DeviceSessionHandler que contiene los métodos necesarios para guardar y
+ * SessionHandler que contiene los métodos necesarios para guardar y
  * identificar cada sesion y su conexion correspondiente.
- * 
- * En el parámetro de ruta(@PathParam)
- * de @ServerEndpoint("/endpoint/{connection-type}") el device-type es el tipo
- * de dispositivo que el clinete enviará al servidor al iniciar la sesion
- * Websocket. Estos tipos de conexion pueden ser:
- * 
- * -internal: dentro de 0.run -external: -clientes: subnube -managers:
- * dispositivos especiales -"": dispositivo aun no registrado.
  * 
  * @author Diego
  */
-@ServerEndpoint(value = "/endpoint/{connection-type}", encoders = { JsonEncoder.class }, decoders = {
+@ServerEndpoint(value = "/endpoint", encoders = { JsonEncoder.class }, decoders = {
 		JsonDecoder.class }, configurator = ServerConfigurator.class)
 public class WSServer {
-
+	
 	private Session session;
+	private String deviceType;
 	// Clase singleton que gestiona las sesiones.
-	private DeviceSessionHandler sessionHandler = DeviceSessionHandler.getInstance();
+	private SessionHandler sessionHandler = SessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	/**
@@ -61,13 +53,11 @@ public class WSServer {
 	 * @param connectionType
 	 */
 	@OnOpen
-	public void onOpen(EndpointConfig config, Session session, @PathParam("connection-type") String connectionType) {
+	public void onOpen(EndpointConfig config, Session session) {
 
 		System.out.println("Ip Externo: " + GetPublicIP.getPublicIP(session).toString());
 		this.session = session;
-		System.out.println("Session: " + session.getId() + "\n Conexion: " + connectionType);
-		session.getUserProperties().put(connectionType, session);
-		sessionHandler.addSession(connectionType, session);
+		
 	}
 
 	/**
@@ -81,8 +71,7 @@ public class WSServer {
 	 * @return
 	 */
 	@OnMessage
-	public void onMessage(JsonObject jsonMessage, Session session,
-			@PathParam("connection-type") String connectionType) {
+	public void onMessage(JsonObject jsonMessage, Session session) {
 
 		this.session = session;
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
@@ -92,10 +81,13 @@ public class WSServer {
 		switch (protocol) {
 		case 100:
 			logger.info("dentro del protocolo 100");
+			
 			List<?> list = ProtocolsHandler.prot100(jsonMessage);
-			String deviceType = getDeviceType(list);
-			logger.info("DeviceType: " + deviceType);
-			System.out.println("DeviceType: " + deviceType);
+			deviceType = getDeviceType(list);
+			logger.info("Session: " + session.getId() + "\n DeviceType: " + deviceType);
+			System.out.println("Session: " + session.getId() + "\n DeviceType: " + deviceType);
+			session.getUserProperties().put(deviceType, session);
+			sessionHandler.addSession(deviceType, session);
 			sendJsonMessage(deviceType);
 
 			break;
@@ -109,10 +101,10 @@ public class WSServer {
 	 * Cuando el cliente cierra la conexion.
 	 */
 	@OnClose
-	public void onClose(Session session, @PathParam("connection-type") String connectionType, CloseReason closeReason) {
+	public void onClose(Session session, CloseReason closeReason) {
 
 		System.out.println("Session: " + session.getId() + " cerrando...");
-		sessionHandler.removeSession(session, connectionType);
+		sessionHandler.removeSession(session, deviceType);
 
 		if (!(closeReason.getCloseCode().equals(CloseCodes.GOING_AWAY)
 				|| closeReason.getCloseCode().equals(CloseCodes.NORMAL_CLOSURE)))

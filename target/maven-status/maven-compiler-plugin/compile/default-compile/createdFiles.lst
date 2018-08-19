@@ -4,7 +4,7 @@ com/run4sky/beans/SecureDisp.class
 com/run4sky/websocket/ServerConfigurator.class
 com/run4sky/json/JsonDecoder.class
 com/run4sky/json/JsonEncoder.class
-com/run4sky/websocket/DeviceSessionHandler.class
+com/run4sky/websocket/SessionHandler.class
 com/run4sky/beans/DispLocation.class
 com/run4sky/queries/GenericDAO.class
 com/run4sky/beans/ClienService.class
