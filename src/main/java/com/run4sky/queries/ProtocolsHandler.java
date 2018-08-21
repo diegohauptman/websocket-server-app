@@ -34,7 +34,7 @@ public class ProtocolsHandler {
 		String mac = jsonMessage.get("mac").getAsString();
 		logger.info("Mac: " + mac);
 		
-		//Array con las clases que serán buscadas.
+		//Array con las clases que seran buscadas.
 		Class[] classes = {InsernalService.class, SecureDisp.class, ExternalDisp.class, ClienService.class};
 		
 		//Lista que se devuelve cuando el dispositivo no ha sido encontrado.
@@ -44,13 +44,15 @@ public class ProtocolsHandler {
 
 		GenericDAO dao = new GenericDAO();
 		
+		//Busca en cada clase por el dispositivo segun la Mac, cuando lo encuentra para la busqueda
+		//y devuelve la lista con el dispositivo.
 		for (Class clazz : classes) {
 			List<T> list = dao.findByProperty(clazz, "mac", mac);
 			if(!list.isEmpty()) {
 				return list;
 			} 
 		}
-		
+		//Si no encuentra devuelve una lista con la string "Dispositivo no encontrado".
 		logger.info("Dispositivo no encontrado");
 		return notFoundList;
 		 

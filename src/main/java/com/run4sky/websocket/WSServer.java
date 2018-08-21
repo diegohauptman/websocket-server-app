@@ -46,8 +46,6 @@ public class WSServer {
 	 * Metodo que se ejecuta justo al iniciar la conexion con el Websocket, antes de
 	 * cualquier otra cosa.
 	 * 
-	 * Por parámetros recibimos la session y la String "connection-type" para
-	 * añadirlos al Hashmap correspondiente segun el tipo de conexion.
 	 * 
 	 * @param session
 	 * @param connectionType
@@ -79,6 +77,9 @@ public class WSServer {
 		int protocol = jsonMessage.get("protocol").getAsInt();
 
 		switch (protocol) {
+		//protocolo 100 recibe las informaciones del dispositivo y busca en la base de dados si esta registrado.
+		//segun el tipo de dispositivo, a�ade la sesion al HashMap del sessionHandler.
+		//Envia un mensage al agente del dispositivo con la informacion encontrada (Si esta registado o no, cual tipo de dispositivo etc.)
 		case 100:
 			logger.info("dentro del protocolo 100");
 			
@@ -99,6 +100,11 @@ public class WSServer {
 
 	/**
 	 * Cuando el cliente cierra la conexion.
+	 * 
+	 * Quita las sessiones que se cierran del las listas de 
+	 * sessiones en sessionHandler.removeSession(session, deviceType).
+	 *  
+	 * Log del closeReason muestra si la sesion se ha cerrado normalmente.
 	 */
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {

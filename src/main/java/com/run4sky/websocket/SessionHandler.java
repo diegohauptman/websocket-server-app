@@ -17,27 +17,31 @@ import org.json.JSONObject;
 
 /**
  * Clase que gestiona y guarda en HashMaps las sesiones con sus correspondientes
- * dispositivos. Hay una HashMap para cada tipo de conexion:
- * -internalDevicesSessionList: en 0.run4sky -externalDevicesSessionList:
- * -managersSessionId -clientDevices -unsigned
+ * dispositivos. 
  *
  * @author user
  */
 public class SessionHandler {
-
+	
+	//Map de sesiones. 
+	//Key - String connectionType
+	//Value - List segun el tipo de dispositivos conectados.
     private static final Map<String, List<Session>> sessionsMap = new HashMap<>();
-
+    
+    //Listas que guardan las sesiones segun el dispositivo
     private static final List<Session> internalDevicesSessionList = new ArrayList<>();
     private static final List<Session> externalDevicesSessionList = new ArrayList<>();
     private static final List<Session> managersSessionList = new ArrayList<>();
     private static final List<Session> clientSessionList = new ArrayList<>();
     private static final List<Session> unsignedSessionList = new ArrayList<>();
-
+    
+    //Instancia estatica de la clase para crear un singleton
     private static SessionHandler instance;
 
     private SessionHandler() {
     }
-
+    
+    //Constructor estatico que devuelve una unica instancia estatica de la clase: Singleton
     public static SessionHandler getInstance() {
         if (instance == null) {
             instance = new SessionHandler();
@@ -47,7 +51,7 @@ public class SessionHandler {
     }
 
     /**
-     * Se añade las sesiones en HashMaps para identificar cual sesion
+     * Se anade las sesiones en HashMaps para identificar cual sesion
      * corresponde a que tipo de conexion.
      *
      * @param connectionType
@@ -55,12 +59,7 @@ public class SessionHandler {
      */
     public void addSession(String connectionType, Session session) {
 
-        //Ejemplo de lo que deve hacer addSession
-        //Cada sesion viene con un parametro (@PathParam) se se guarda como 
-        //clave en un Map implementado en Websocket API (UserProperties).
-        //Buscamos por getUserProperties() por la clave y obtenemos como valor 
-        //la sesion correspondiente. 
-        //Si el dispositivo no esta registrado, el ID será la MacAddress
+        
         System.out.println("Entra en el metodo addSession.");
 
         if (session.getUserProperties().containsKey("com.run4sky.beans.InsernalService")) {
@@ -95,7 +94,8 @@ public class SessionHandler {
         }
 
     }
-
+    
+    //Imprime en consola las sesiones.
     private void printSessionMap() {
         for (Map.Entry<String, List<Session>> entry : sessionsMap.entrySet()) {
             String connection = entry.getKey();
@@ -108,10 +108,8 @@ public class SessionHandler {
 
     /**
      *
-     * @param message
-     * @param session
-     * @param deviceID
-     */
+    
+     
     public void sendToSession(String message, Session session, String deviceID) {
 
         try {
@@ -126,7 +124,6 @@ public class SessionHandler {
                             session.getBasicRemote().sendObject(json);
                         }
                     }
-
                 }
             }
         } catch (JSONException ex) {
@@ -135,13 +132,19 @@ public class SessionHandler {
             ex.printStackTrace();
         }
     }
-
+    
+    */
+    /**
+     * Quita la sesion de la lista de sesiones. Metodo usado en onClose.
+     * @param session
+     * @param connectionType
+     */
     public void removeSession(Session session, String connectionType) {
     	
     	List<Session> sessionsList = Collections.synchronizedList(new ArrayList<>());
     	String key;
     	Session leavingSession = null;
-    	
+    	//Muestra las sesiones en la lista antes de cerrarlas
         for (Map.Entry<String, List<Session>> entry : sessionsMap.entrySet()) {
             key = entry.getKey();
             if (key.equals(connectionType)) {
@@ -151,16 +154,17 @@ public class SessionHandler {
                 }
             }
         }
-        
+        //Guarda las sessiones salientes en una variable de tipo Session para imprimir en consola.
         for (Session session1 : sessionsList) {
-            //System.out.println("SessionList: " + session1.getId());
             if (session1.getId().equals(session.getId())) {
             	leavingSession = session;
             }
         }
-        
+        //Quita la sesion de la lista.
         sessionsList.remove(session);
+        //Imprime en consola la sesion saliente.
         System.out.println("Removed session " + leavingSession.getId());
+        //Imprime en consola la lista con las sesiones que quedaron.
         for (Session session2 : sessionsList) {
             System.out.println("SessionList after removal: " + session2.getId());
         }

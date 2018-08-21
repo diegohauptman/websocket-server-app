@@ -15,6 +15,19 @@ import org.hibernate.cfg.Configuration;
 
 import javassist.NotFoundException;
 
+/**
+ * Clase en patron DAO (Data Access Object)
+ * 
+ * Maneja las busquedas en la base de datos 
+ * con metodos CRUD (create, read, update, delete)
+ * 
+ * Esta clase hace uso de los Generics en los metodos para que
+ * se pueda trabajar con las distintas clases/objetos mapeadas de 
+ * la base de dadtos por Hibernate
+ * 
+ * @author user
+ *
+ */
 public class GenericDAO {
 	
 	
