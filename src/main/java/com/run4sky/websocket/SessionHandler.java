@@ -1,9 +1,11 @@
 package com.run4sky.websocket;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -173,6 +175,25 @@ public class SessionHandler {
         for (Session session2 : sessionsList) {
             System.out.println("SessionList after removal: " + session2.getId());
         }
+        
+        
+    }
+    
+    public void removeDisconnectedSessionsFromList() {
+    	  for (Map.Entry<String, List<Session>> entry : sessionsMap.entrySet()) {
+    		  List<Session> sessionList = entry.getValue();
+    		  for (Iterator iterator = sessionList.iterator(); iterator.hasNext();) {
+				Session session = (Session) iterator.next();
+				String data = "Ping";
+                ByteBuffer payload = ByteBuffer.wrap(data.getBytes());
+				try {
+					session.getBasicRemote().sendPing(payload);
+				} catch (IllegalArgumentException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+          }
     }
 }
 
