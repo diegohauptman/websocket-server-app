@@ -1,14 +1,19 @@
-package com.run4sky.queries;
+package com.run4sky.websocket;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import javax.websocket.EncodeException;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.ClienService;
 import com.run4sky.beans.ExternalDisp;
 import com.run4sky.beans.InsernalService;
 import com.run4sky.beans.SecureDisp;
+import com.run4sky.network.GetPublicIP;
+import com.run4sky.queries.GenericDAO;
 
 /**
  * Clase que gestiona los protocolos.
@@ -21,7 +26,7 @@ public class ProtocolsHandler {
 	private static Logger logger = Logger.getLogger("com.run4sky.queries.ProtocolsHandler");
 
 	/**
-	 * Metodo que gestiona el protocolo 100. Busca la direccion Mac del dispositivo
+	 * Protocolo 100. Busca la direccion Mac del dispositivo
 	 * en las tablas. Este metodo devuelve una lista de cualquier clase/objeto segun
 	 * el tipo de dispositivo encontrado. Si no encuentra el dispositivo devuelve
 	 * una lista con la String "Dispositivo no encontrado".
@@ -57,5 +62,4 @@ public class ProtocolsHandler {
 		return notFoundList;
 		 
 	}
-
 }

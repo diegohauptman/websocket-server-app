@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import com.run4sky.json.JsonDecoder;
 import com.run4sky.json.JsonEncoder;
 import com.run4sky.network.GetPublicIP;
-import com.run4sky.queries.ProtocolsHandler;
 
 /**
  * Clase del Websocket Enpoint Server. Aqui se gerencia el ciclo de vida del
@@ -41,11 +40,14 @@ public class WSServer {
 	// Clase singleton que gestiona las sesiones.
 	private SessionHandler sessionHandler = SessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	public Session getSession() {
+		return this.session;
+	}
 
 	/**
 	 * Metodo que se ejecuta justo al iniciar la conexion con el Websocket, antes de
 	 * cualquier otra cosa.
-	 * 
 	 * 
 	 * @param session
 	 * @param connectionType
@@ -54,7 +56,16 @@ public class WSServer {
 	public void onOpen(EndpointConfig config, Session session) {
 
 		System.out.println("Ip Externo: " + GetPublicIP.getPublicIP(session).toString());
+		System.out.println("onOpen ->>> Session: " + session.getId());
 		this.session = session;
+		JsonObject gsonObject = new JsonObject();
+		gsonObject.addProperty("protocol", 200);
+		try {
+			session.getBasicRemote().sendObject(gsonObject);
+		} catch (IOException | EncodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -109,7 +120,7 @@ public class WSServer {
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
 
-		System.out.println("Session: " + session.getId() + " cerrando...");
+		System.out.println("Server onClose --> Session: " + session.getId() + " cerrando...");
 		sessionHandler.removeSession(session, deviceType);
 
 		if (!(closeReason.getCloseCode().equals(CloseCodes.GOING_AWAY)

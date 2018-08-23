@@ -49,8 +49,13 @@ public class SessionHandler {
 
         return instance;
     }
+    
 
-    /**
+    public static Map<String, List<Session>> getSessionsmap() {
+		return sessionsMap;
+	}
+
+	/**
      * Se anade las sesiones en HashMaps para identificar cual sesion
      * corresponde a que tipo de conexion.
      *
