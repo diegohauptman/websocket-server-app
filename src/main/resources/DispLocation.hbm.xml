@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14-ago-2018 13:52:35 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 1, 2018, 7:42:45 PM by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="Ximds_EvilCorp" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.run4sky.beans.DispLocation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="DispLocation">
+    <class catalog="Ximds_EvilCorp" dynamic-insert="false" dynamic-update="false" mutable="true" name="DispLocation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="DispLocation">
         <id name="id" type="int">
             <column name="ID"/>
             <generator class="assigned"/>
@@ -11,6 +11,9 @@
         </property>
         <property generated="never" lazy="false" name="ip" optimistic-lock="true" type="string" unique="false">
             <column length="300" name="IP" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="isRegistered" optimistic-lock="true" type="string" unique="false">
+            <column length="300" name="isRegistered"/>
         </property>
     </class>
 </hibernate-mapping>

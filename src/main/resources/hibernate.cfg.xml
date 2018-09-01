@@ -1,21 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-    	<property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">Madrid1809</property>
         <property name="hibernate.connection.url">jdbc:mysql://85.214.108.235:3306/Ximds_EvilCorp</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping resource="/Client.hbm.xml"/>
-        <mapping resource="/ClienService.hbm.xml"/>
-        <mapping resource="/SecureDisp.hbm.xml"/>
-        <mapping resource="/DispLocation.hbm.xml"/>
-        <mapping resource="/InsernalService.hbm.xml"/>
-        <mapping resource="/ExternalDisp.hbm.xml"/>
-        <mapping resource="/ClientLocation.hbm.xml"/>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.search.autoregister_listeners">true</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping resource="DispLocation.hbm.xml"/>
+        <mapping resource="ClientLocation.hbm.xml"/>
+        <mapping resource="ConnectionLogs.hbm.xml"/>
+        <mapping resource="ExternalDisp.hbm.xml"/>
+        <mapping resource="InsernalService.hbm.xml"/>
+        <mapping resource="ClienService.hbm.xml"/>
+        <mapping resource="Client.hbm.xml"/>
+        <mapping resource="SecureDisp.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

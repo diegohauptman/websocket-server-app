@@ -21,4 +21,7 @@
 	<table-filter match-name="SecureDisp"
 		match-catalog="Ximds_EvilCorp">
 	</table-filter>
+	<table-filter match-name="connectionLogs"
+		match-catalog="Ximds_EvilCorp">
+	</table-filter>
 </hibernate-reverse-engineering>
