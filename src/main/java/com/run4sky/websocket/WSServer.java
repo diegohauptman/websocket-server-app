@@ -58,15 +58,6 @@ public class WSServer {
 		System.out.println("Ip Externo: " + GetPublicIP.getPublicIP(session).toString());
 		System.out.println("onOpen ->>> Session: " + session.getId());
 		this.session = session;
-		JsonObject gsonObject = new JsonObject();
-		gsonObject.addProperty("protocol", 200);
-		try {
-			session.getBasicRemote().sendObject(gsonObject);
-		} catch (IOException | EncodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 
 	/**
@@ -89,12 +80,12 @@ public class WSServer {
 
 		switch (protocol) {
 		//protocolo 100 recibe las informaciones del dispositivo y busca en la base de dados si esta registrado.
-		//segun el tipo de dispositivo, añade la sesion al HashMap del sessionHandler.
+		//segun el tipo de dispositivo, aï¿½ade la sesion al HashMap del sessionHandler.
 		//Envia un mensage al agente del dispositivo con la informacion encontrada (Si esta registado o no, cual tipo de dispositivo etc.)
 		case 100:
 			logger.info("dentro del protocolo 100");
 			
-			List<?> list = ProtocolsHandler.prot100(jsonMessage);
+			List<?> list = Protocol.prot100(jsonMessage);
 			deviceType = getDeviceType(list);
 			logger.info("Session: " + session.getId() + "\n DeviceType: " + deviceType);
 			System.out.println("Session: " + session.getId() + "\n DeviceType: " + deviceType);

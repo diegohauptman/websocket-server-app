@@ -21,7 +21,7 @@ import com.run4sky.queries.GenericDAO;
  * @author user
  *
  */
-public class ProtocolsHandler {
+public class Protocol {
 
 	private static Logger logger = Logger.getLogger("com.run4sky.queries.ProtocolsHandler");
 
