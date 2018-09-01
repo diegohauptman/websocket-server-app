@@ -1,6 +1,6 @@
 com/run4sky/network/GetPublicIP.class
-com/run4sky/queries/ProtocolsHandler.class
 com/run4sky/beans/SecureDisp.class
+com/run4sky/websocket/ProtocolsHandler.class
 com/run4sky/websocket/ServerConfigurator.class
 com/run4sky/json/JsonDecoder.class
 com/run4sky/json/JsonEncoder.class
