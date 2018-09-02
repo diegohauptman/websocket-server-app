@@ -17,10 +17,8 @@ public class ServerConfigurator extends ServerEndpointConfig.Configurator {
 	public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request, HandshakeResponse response) {
 		System.out.println("Handshake Request headers: " + request.getHeaders());
 		System.out.println("Handshake Response headers: " + response.getHeaders());
-		request.getHttpSession();
 		URI requestURI = request.getRequestURI();
 		System.out.println(requestURI.toString());
-		//FIXME Principal userPrincipal = request.getUserPrincipal();
 		
 
 	}

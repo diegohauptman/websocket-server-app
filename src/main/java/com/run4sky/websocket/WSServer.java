@@ -3,6 +3,8 @@ package com.run4sky.websocket;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,7 +42,26 @@ public class WSServer {
 	// Clase singleton que gestiona las sesiones.
 	private SessionHandler sessionHandler = SessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+	private LocalDateTime startConnectionTime;
+	private LocalDateTime stopConnectionTime;
+	private String mac;
 	
+	
+	
+	/**
+	 * @return the startConnectionTime
+	 */
+	public LocalDateTime getStartConnectionTime() {
+		return startConnectionTime;
+	}
+
+	/**
+	 * @return the stopConnectionTime
+	 */
+	public LocalDateTime getStopConnectionTime() {
+		return stopConnectionTime;
+	}
+
 	public Session getSession() {
 		return this.session;
 	}
@@ -54,7 +75,8 @@ public class WSServer {
 	 */
 	@OnOpen
 	public void onOpen(EndpointConfig config, Session session) {
-
+		
+		startConnectionTime = LocalDateTime.now();
 		System.out.println("Ip Externo: " + GetPublicIP.getPublicIP(session).toString());
 		System.out.println("onOpen ->>> Session: " + session.getId());
 		this.session = session;
@@ -77,7 +99,7 @@ public class WSServer {
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
 
 		int protocol = jsonMessage.get("protocol").getAsInt();
-		String mac = jsonMessage.get("mac").getAsString();
+		mac = jsonMessage.get("mac").getAsString();
 
 		switch (protocol) {
 		//protocolo 100 recibe las informaciones del dispositivo y busca en la base de dados si esta registrado.
@@ -94,7 +116,7 @@ public class WSServer {
 			
 			deviceTypeString = deviceObject.getClass().getName();
 			logger.info("\nSession: " + session.getId() + "\nDeviceType: " + deviceTypeString);
-			Protocol.connectionLog(mac);
+			//Protocol.connectionLog(mac);
 			session.getUserProperties().put(deviceTypeString, session);
 			sessionHandler.addSession(deviceTypeString, session);
 			sendJsonMessage(deviceTypeString);
@@ -116,7 +138,9 @@ public class WSServer {
 	 */
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
-
+		
+		stopConnectionTime = LocalDateTime.now();
+		Protocol.connectionLog(mac, durationConnection());
 		System.out.println("Server onClose --> Session: " + session.getId() + " cerrando...");
 		sessionHandler.removeSession(session, deviceTypeString);
 
@@ -211,6 +235,13 @@ public class WSServer {
 
 		return isRegistered;
 
+	}
+	
+	public Long durationConnection() {
+		Duration duration = Duration.between(startConnectionTime, stopConnectionTime);
+		long durationConn = duration.toMillis();
+		return durationConn;
+		
 	}
 	
 	

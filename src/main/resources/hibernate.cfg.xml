@@ -11,13 +11,13 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping resource="/Client.hbm.xml"/>
-        <mapping resource="/ClienService.hbm.xml"/>
-        <mapping resource="/SecureDisp.hbm.xml"/>
-        <mapping resource="/DispLocation.hbm.xml"/>
-        <mapping resource="/InsernalService.hbm.xml"/>
-        <mapping resource="/ExternalDisp.hbm.xml"/>
         <mapping resource="/ConnectionLogs.hbm.xml"/>
+        <mapping resource="/ClienService.hbm.xml"/>
+        <mapping resource="/Client.hbm.xml"/>
         <mapping resource="/ClientLocation.hbm.xml"/>
+        <mapping resource="/DispLocation.hbm.xml"/>
+        <mapping resource="/ExternalDisp.hbm.xml"/>
+        <mapping resource="/InsernalService.hbm.xml"/>
+        <mapping resource="/SecureDisp.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
