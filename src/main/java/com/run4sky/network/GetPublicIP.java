@@ -6,6 +6,11 @@ import java.net.InetSocketAddress;
 import javax.websocket.RemoteEndpoint.Async;
 import javax.websocket.Session;
 
+/**
+ * Clase que recupera la IP publica/externa de la sesion del remote endpoint.
+ * @author D. Hauptman
+ *
+ */
 public class GetPublicIP {
 	
 	public static InetSocketAddress getPublicIP(Session session) {

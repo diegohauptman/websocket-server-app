@@ -1,18 +1,16 @@
 package com.run4sky.websocket;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import javax.websocket.EncodeException;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.ClienService;
 import com.run4sky.beans.ExternalDisp;
 import com.run4sky.beans.InsernalService;
 import com.run4sky.beans.SecureDisp;
-import com.run4sky.network.GetPublicIP;
 import com.run4sky.queries.GenericDAO;
 
 /**
@@ -53,6 +51,7 @@ public class Protocol {
 		//y devuelve la lista con el dispositivo.
 		for (Class clazz : classes) {
 			List<T> list = dao.findByProperty(clazz, "mac", mac);
+			
 			if(!list.isEmpty()) {
 				return list;
 			} 
@@ -61,5 +60,36 @@ public class Protocol {
 		logger.info("Dispositivo no encontrado");
 		return notFoundList;
 		 
+	}
+	
+	public static void registerDevice(Object object, JsonObject jsonMessage) {
+		
+		String cpu = jsonMessage.get("cpuModel").getAsString();
+		String ram = jsonMessage.get("memoryQuantity").getAsString();
+		String so = jsonMessage.get("os").getAsString();
+		int ncpu = jsonMessage.get("numberOfCPU").getAsInt();
+		
+		try {
+			
+			Method setCpu = object.getClass().getMethod("setCpu", String.class);
+			Method setRam = object.getClass().getMethod("setRam", String.class);
+			Method setSo = object.getClass().getMethod("setSo", String.class);
+			Method setNcpu = object.getClass().getMethod("setNcpu", int.class);
+			Method setIsRegistered = object.getClass().getMethod("setIsRegistered", boolean.class);
+			
+			setCpu.invoke(object, cpu);
+			setRam.invoke(object, ram);
+			setSo.invoke(object, so);
+			setNcpu.invoke(object, ncpu);
+			setIsRegistered.invoke(object, true);
+			
+			GenericDAO dao = new GenericDAO();
+			
+			dao.merge(object);
+			
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

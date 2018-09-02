@@ -36,7 +36,7 @@ import com.run4sky.network.GetPublicIP;
 public class WSServer {
 	
 	private Session session;
-	private String deviceType;
+	private String deviceTypeString;
 	// Clase singleton que gestiona las sesiones.
 	private SessionHandler sessionHandler = SessionHandler.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -83,19 +83,23 @@ public class WSServer {
 		//segun el tipo de dispositivo, a�ade la sesion al HashMap del sessionHandler.
 		//Envia un mensage al agente del dispositivo con la informacion encontrada (Si esta registado o no, cual tipo de dispositivo etc.)
 		case 100:
-			logger.info("dentro del protocolo 100");
+			logger.info("\ndentro del switch case 100");
 			
 			List<?> list = Protocol.prot100(jsonMessage);
-			deviceType = getDeviceType(list);
-			logger.info("Session: " + session.getId() + "\n DeviceType: " + deviceType);
-			System.out.println("Session: " + session.getId() + "\n DeviceType: " + deviceType);
-			session.getUserProperties().put(deviceType, session);
-			sessionHandler.addSession(deviceType, session);
-			sendJsonMessage(deviceType);
+			Object deviceObject = getDeviceType(list);
+			if(!isRegistered(deviceObject)) {
+				Protocol.registerDevice(deviceObject, jsonMessage);
+			}
+			
+			deviceTypeString = deviceObject.getClass().getName();
+			logger.info("\nSession: " + session.getId() + "\nDeviceType: " + deviceTypeString);
+			session.getUserProperties().put(deviceTypeString, session);
+			sessionHandler.addSession(deviceTypeString, session);
+			sendJsonMessage(deviceTypeString);
 
 			break;
 		default:
-			logger.info("default del switch");
+			logger.info("\ndefault del switch");
 			break;
 		}
 	}
@@ -104,7 +108,7 @@ public class WSServer {
 	 * Cuando el cliente cierra la conexion.
 	 * 
 	 * Quita las sessiones que se cierran del las listas de 
-	 * sessiones en sessionHandler.removeSession(session, deviceType).
+	 * sessiones en sessionHandler.removeSession(session, deviceTypeString).
 	 *  
 	 * Log del closeReason muestra si la sesion se ha cerrado normalmente.
 	 */
@@ -112,7 +116,7 @@ public class WSServer {
 	public void onClose(Session session, CloseReason closeReason) {
 
 		System.out.println("Server onClose --> Session: " + session.getId() + " cerrando...");
-		sessionHandler.removeSession(session, deviceType);
+		sessionHandler.removeSession(session, deviceTypeString);
 
 		if (!(closeReason.getCloseCode().equals(CloseCodes.GOING_AWAY)
 				|| closeReason.getCloseCode().equals(CloseCodes.NORMAL_CLOSURE)))
@@ -134,7 +138,7 @@ public class WSServer {
 	/**
 	 * Construye un objeto Json e envia al cliente.
 	 * 
-	 * @param deviceType
+	 * @param deviceTypeString
 	 */
 	private void sendJsonMessage(String deviceType) {
 
@@ -159,32 +163,48 @@ public class WSServer {
 	 * @param list
 	 * @return
 	 */
-	public String getDeviceType(List list) {
-		Class<?> clazz = null;
+	public Object getDeviceType(List list) {
 		Object object = null;
-		String objectClass = null;
+		Object objectClass = null;
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			object = (Object) iterator.next();
-			objectClass = object.getClass().getName();
-			logger.info("Tipo de dispositivo: " + object.toString());
+			logger.info("\nTipo de dispositivo: " + object.toString());
 			System.out.println("Tipo de dispositivo: " + object.toString());
-			clazz = object.getClass();
 		}
 		// Si el dispositivo ha sido encontrado (object != String) recoje su id y
 		// imprime en consola.
 		if (!(object instanceof String)) {
 			try {
-				Method getId = clazz.getMethod("getId");
+				Method getId = object.getClass().getMethod("getId");
 				int id = (int) getId.invoke(object);
-				logger.info("ID del dispositivo: " + id);
-				System.out.println("ID del dispositivo: " + id);
+				logger.info("\nID del dispositivo: " + id);
 
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
 		}
-		return objectClass;
+		return object;
+
+	}
+	
+	public boolean isRegistered(Object object) {
+		
+		boolean isRegistered = false;
+
+		logger.info("Tipo de dispositivo: " + object.toString());
+		System.out.println("Tipo de dispositivo: " + object.toString());
+		try {
+			Method getIsRegistered = object.getClass().getMethod("getIsRegistered", null);
+			isRegistered = (boolean) getIsRegistered.invoke(object, null);
+			logger.info("\nEl dispositivo está registrado? ---> " + isRegistered);
+
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		return isRegistered;
 
 	}
 }

@@ -90,6 +90,22 @@ public class GenericDAO {
 		}
 	}
 	
+	public <T> void merge(T entity) {
+		Session session = factory.openSession();
+		try {
+			session.getTransaction().begin();
+			session.merge(entity);
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) 
+				session.getTransaction().rollback();
+			
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
 	/**
 	 * Metodo generico para duscar por id
 	 * @param clazz
