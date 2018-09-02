@@ -12,7 +12,7 @@ public class ExternalDisp implements java.io.Serializable {
 	private String ram;
 	private String so;
 	private int ncpu;
-	private String isRegistered;
+	private boolean isRegistered;
 
 	public ExternalDisp() {
 	}
@@ -26,7 +26,7 @@ public class ExternalDisp implements java.io.Serializable {
 		this.ncpu = ncpu;
 	}
 
-	public ExternalDisp(int id, String mac, String cpu, String ram, String so, int ncpu, String isRegistered) {
+	public ExternalDisp(int id, String mac, String cpu, String ram, String so, int ncpu, boolean isRegistered) {
 		this.id = id;
 		this.mac = mac;
 		this.cpu = cpu;
@@ -84,11 +84,11 @@ public class ExternalDisp implements java.io.Serializable {
 		this.ncpu = ncpu;
 	}
 
-	public String getIsRegistered() {
+	public boolean getIsRegistered() {
 		return this.isRegistered;
 	}
 
-	public void setIsRegistered(String isRegistered) {
+	public void setIsRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 

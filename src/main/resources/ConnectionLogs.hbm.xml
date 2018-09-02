@@ -6,10 +6,10 @@
             <column name="ID"/>
             <generator class="assigned"/>
         </id>
-        <property generated="never" lazy="false" name="deviceType" optimistic-lock="true" type="string" unique="false">
-            <column length="300" name="deviceType"/>
+        <property generated="never" lazy="false" name="mac" optimistic-lock="true" type="string" unique="false">
+            <column length="300" name="mac"/>
         </property>
-        <property generated="never" lazy="false" name="connectionTime" optimistic-lock="true" type="timestamp" unique="false">
+        <property generated="never" lazy="false" name="connectionTime" optimistic-lock="true" type="LocalDateTime" unique="false">
             <column length="19" name="connectionTime" not-null="true"/>
         </property>
     </class>

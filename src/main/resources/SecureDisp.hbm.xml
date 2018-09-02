@@ -21,7 +21,7 @@
         <property generated="never" lazy="false" name="so" optimistic-lock="true" type="string" unique="false">
             <column length="300" name="SO" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="isRegistered" optimistic-lock="true" type="string" unique="false">
+        <property generated="never" lazy="false" name="isRegistered" optimistic-lock="true" type="boolean" unique="false">
             <column length="300" name="isRegistered"/>
         </property>
     </class>

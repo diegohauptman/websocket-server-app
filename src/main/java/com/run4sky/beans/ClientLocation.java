@@ -10,7 +10,7 @@ public class ClientLocation implements java.io.Serializable {
 	private String clientIpint;
 	private String clientIpext;
 	private int clientId;
-	private String isRegistered;
+	private boolean isRegistered;
 
 	public ClientLocation() {
 	}
@@ -22,7 +22,7 @@ public class ClientLocation implements java.io.Serializable {
 		this.clientId = clientId;
 	}
 
-	public ClientLocation(int id, String clientIpint, String clientIpext, int clientId, String isRegistered) {
+	public ClientLocation(int id, String clientIpint, String clientIpext, int clientId, boolean isRegistered) {
 		this.id = id;
 		this.clientIpint = clientIpint;
 		this.clientIpext = clientIpext;
@@ -62,11 +62,11 @@ public class ClientLocation implements java.io.Serializable {
 		this.clientId = clientId;
 	}
 
-	public String getIsRegistered() {
+	public boolean getIsRegistered() {
 		return this.isRegistered;
 	}
 
-	public void setIsRegistered(String isRegistered) {
+	public void setIsRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 

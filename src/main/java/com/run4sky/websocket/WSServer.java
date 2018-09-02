@@ -77,6 +77,7 @@ public class WSServer {
 		System.out.println("Mensage Json cliente: " + jsonMessage.toString());
 
 		int protocol = jsonMessage.get("protocol").getAsInt();
+		String mac = jsonMessage.get("mac").getAsString();
 
 		switch (protocol) {
 		//protocolo 100 recibe las informaciones del dispositivo y busca en la base de dados si esta registrado.
@@ -93,6 +94,7 @@ public class WSServer {
 			
 			deviceTypeString = deviceObject.getClass().getName();
 			logger.info("\nSession: " + session.getId() + "\nDeviceType: " + deviceTypeString);
+			Protocol.connectionLog(mac);
 			session.getUserProperties().put(deviceTypeString, session);
 			sessionHandler.addSession(deviceTypeString, session);
 			sendJsonMessage(deviceTypeString);
@@ -188,12 +190,15 @@ public class WSServer {
 
 	}
 	
+	/**
+	 * Metodo que devuelve true o false si el dispositivo esta registrado en la BBDD o no.
+	 * @param object
+	 * @return
+	 */
 	public boolean isRegistered(Object object) {
 		
 		boolean isRegistered = false;
-
 		logger.info("Tipo de dispositivo: " + object.toString());
-		System.out.println("Tipo de dispositivo: " + object.toString());
 		try {
 			Method getIsRegistered = object.getClass().getMethod("getIsRegistered", null);
 			isRegistered = (boolean) getIsRegistered.invoke(object, null);
@@ -207,4 +212,6 @@ public class WSServer {
 		return isRegistered;
 
 	}
+	
+	
 }

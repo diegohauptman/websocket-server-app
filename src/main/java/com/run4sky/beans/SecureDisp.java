@@ -12,7 +12,7 @@ public class SecureDisp implements java.io.Serializable {
 	private String ram;
 	private int ncpu;
 	private String so;
-	private String isRegistered;
+	private boolean isRegistered;
 
 	public SecureDisp() {
 	}
@@ -26,7 +26,7 @@ public class SecureDisp implements java.io.Serializable {
 		this.so = so;
 	}
 
-	public SecureDisp(int id, String mac, String cpu, String ram, int ncpu, String so, String isRegistered) {
+	public SecureDisp(int id, String mac, String cpu, String ram, int ncpu, String so, boolean isRegistered) {
 		this.id = id;
 		this.mac = mac;
 		this.cpu = cpu;
@@ -84,11 +84,11 @@ public class SecureDisp implements java.io.Serializable {
 		this.so = so;
 	}
 
-	public String getIsRegistered() {
+	public boolean getIsRegistered() {
 		return this.isRegistered;
 	}
 
-	public void setIsRegistered(String isRegistered) {
+	public void setIsRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 

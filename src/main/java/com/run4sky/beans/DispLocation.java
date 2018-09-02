@@ -9,7 +9,7 @@ public class DispLocation implements java.io.Serializable {
 	private int id;
 	private int dispId;
 	private String ip;
-	private String isRegistered;
+	private boolean isRegistered;
 
 	public DispLocation() {
 	}
@@ -20,7 +20,7 @@ public class DispLocation implements java.io.Serializable {
 		this.ip = ip;
 	}
 
-	public DispLocation(int id, int dispId, String ip, String isRegistered) {
+	public DispLocation(int id, int dispId, String ip, boolean isRegistered) {
 		this.id = id;
 		this.dispId = dispId;
 		this.ip = ip;
@@ -51,11 +51,11 @@ public class DispLocation implements java.io.Serializable {
 		this.ip = ip;
 	}
 
-	public String getIsRegistered() {
+	public boolean getIsRegistered() {
 		return this.isRegistered;
 	}
 
-	public void setIsRegistered(String isRegistered) {
+	public void setIsRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 

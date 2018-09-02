@@ -2,12 +2,14 @@ package com.run4sky.websocket;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.ClienService;
+import com.run4sky.beans.ConnectionLogs;
 import com.run4sky.beans.ExternalDisp;
 import com.run4sky.beans.InsernalService;
 import com.run4sky.beans.SecureDisp;
@@ -90,6 +92,15 @@ public class Protocol {
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public static void connectionLog(String mac) {
+		GenericDAO dao = new GenericDAO();
+		ConnectionLogs connectionLog = new ConnectionLogs();
+		connectionLog.setConnectionTime(LocalDateTime.now());
+		connectionLog.setMac(mac);
+		dao.save(connectionLog);
 		
 	}
 }

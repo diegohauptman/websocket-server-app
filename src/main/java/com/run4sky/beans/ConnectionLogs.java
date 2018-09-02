@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class ConnectionLogs implements java.io.Serializable {
 
 	private int id;
-	private String deviceType;
+	private String mac;
 	private LocalDateTime connectionTime;
 
 	public ConnectionLogs() {
@@ -23,7 +23,7 @@ public class ConnectionLogs implements java.io.Serializable {
 
 	public ConnectionLogs(int id, String deviceType, LocalDateTime connectionTime) {
 		this.id = id;
-		this.deviceType = deviceType;
+		this.mac = deviceType;
 		this.connectionTime = connectionTime;
 	}
 
@@ -35,12 +35,12 @@ public class ConnectionLogs implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getDeviceType() {
-		return this.deviceType;
+	public String getMac() {
+		return this.mac;
 	}
 
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
+	public void setMac(String deviceType) {
+		this.mac = deviceType;
 	}
 
 	public LocalDateTime getConnectionTime() {
