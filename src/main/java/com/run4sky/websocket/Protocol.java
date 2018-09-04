@@ -4,11 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.ClienService;
+import com.run4sky.beans.ClientLocation;
 import com.run4sky.beans.ConnectionLogs;
 import com.run4sky.beans.ExternalDisp;
 import com.run4sky.beans.InsernalService;
@@ -63,7 +65,11 @@ public class Protocol {
 		return notFoundList;
 		 
 	}
-	
+	/**
+	 * 
+	 * @param object
+	 * @param jsonMessage
+	 */
 	public static void registerDevice(Object object, JsonObject jsonMessage) {
 		
 		String cpu = jsonMessage.get("cpuModel").getAsString();
@@ -93,6 +99,29 @@ public class Protocol {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static <T> void registerClientLocation(Object object, JsonObject jsonMessage, String mac) {
+		String publicIP = jsonMessage.get("public ip").getAsString();
+		int clientId;
+		Class clazz = object.getClass();
+		GenericDAO dao = new GenericDAO();
+		Object device = null;
+		List<T> list = dao.findByProperty(clazz, "mac", mac);
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			device = (Object) iterator.next();
+		}
+		try {
+			Method getId = device.getClass().getMethod("getId", null);
+			clientId = (int) getId.invoke(device, null);
+			ClientLocation clientLocation = new ClientLocation();
+			clientLocation.setClientId(clientId);
+			clientLocation.setClientIpext(publicIP);
+			dao.merge(clientLocation);
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void saveConnectionLog(String mac, Long durationConnection) {

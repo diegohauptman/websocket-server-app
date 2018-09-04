@@ -115,8 +115,9 @@ public class WSServer {
 			Object deviceObject = getDeviceType(list);
 			if(!isRegistered(deviceObject)) {
 				Protocol.registerDevice(deviceObject, jsonMessage);
+				
 			}
-			
+			Protocol.registerClientLocation(deviceObject, jsonMessage, mac);
 			deviceTypeString = deviceObject.getClass().getName();
 			logger.info("\nSession: " + session.getId() + "\nDeviceType: " + deviceTypeString);
 			//Protocol.connectionLog(mac);
