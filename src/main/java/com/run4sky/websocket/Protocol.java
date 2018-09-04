@@ -95,7 +95,7 @@ public class Protocol {
 		
 	}
 	
-	public static void connectionLog(String mac, Long durationConnection) {
+	public static void saveConnectionLog(String mac, Long durationConnection) {
 		GenericDAO dao = new GenericDAO();
 		ConnectionLogs connectionLog = new ConnectionLogs();
 		connectionLog.setConnectionTime(LocalDateTime.now());

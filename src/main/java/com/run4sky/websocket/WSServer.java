@@ -45,6 +45,7 @@ public class WSServer {
 	private LocalDateTime startConnectionTime;
 	private LocalDateTime stopConnectionTime;
 	private String mac;
+	private String publicIp;
 	
 	
 	
@@ -100,6 +101,8 @@ public class WSServer {
 
 		int protocol = jsonMessage.get("protocol").getAsInt();
 		mac = jsonMessage.get("mac").getAsString();
+		publicIp = jsonMessage.get("public ip").getAsString();
+		
 
 		switch (protocol) {
 		//protocolo 100 recibe las informaciones del dispositivo y busca en la base de dados si esta registrado.
@@ -140,7 +143,7 @@ public class WSServer {
 	public void onClose(Session session, CloseReason closeReason) {
 		
 		stopConnectionTime = LocalDateTime.now();
-		Protocol.connectionLog(mac, durationConnection());
+		Protocol.saveConnectionLog(mac, durationConnection());
 		System.out.println("Server onClose --> Session: " + session.getId() + " cerrando...");
 		sessionHandler.removeSession(session, deviceTypeString);
 
