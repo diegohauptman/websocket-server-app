@@ -9,7 +9,6 @@ public class Client implements java.io.Serializable {
 	private int id;
 	private String name;
 	private String description;
-	private boolean isRegistered;
 
 	public Client() {
 	}
@@ -20,12 +19,6 @@ public class Client implements java.io.Serializable {
 		this.description = description;
 	}
 
-	public Client(int id, String name, String description, boolean isRegistered) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.isRegistered = isRegistered;
-	}
 
 	public int getId() {
 		return this.id;
@@ -50,13 +43,4 @@ public class Client implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public boolean getIsRegistered() {
-		return this.isRegistered;
-	}
-
-	public void setIsRegistered(boolean isRegistered) {
-		this.isRegistered = isRegistered;
-	}
-
 }

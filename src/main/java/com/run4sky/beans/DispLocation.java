@@ -8,23 +8,17 @@ public class DispLocation implements java.io.Serializable {
 
 	private int id;
 	private int dispId;
-	private String ip;
-	private boolean isRegistered;
+	private String externalIP;
+	private String internalIP;
 
 	public DispLocation() {
 	}
 
-	public DispLocation(int id, int dispId, String ip) {
+	public DispLocation(int id, int dispId, String externalIP, String internalIP) {
 		this.id = id;
 		this.dispId = dispId;
-		this.ip = ip;
-	}
-
-	public DispLocation(int id, int dispId, String ip, boolean isRegistered) {
-		this.id = id;
-		this.dispId = dispId;
-		this.ip = ip;
-		this.isRegistered = isRegistered;
+		this.externalIP = externalIP;
+		this.setInternalIP(internalIP);
 	}
 
 	public int getId() {
@@ -43,20 +37,20 @@ public class DispLocation implements java.io.Serializable {
 		this.dispId = dispId;
 	}
 
-	public String getIp() {
-		return this.ip;
+	public String getExternalIP() {
+		return this.externalIP;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setExternalIP(String externalIP) {
+		this.externalIP = externalIP;
 	}
 
-	public boolean getIsRegistered() {
-		return this.isRegistered;
+	
+	public String getInternalIP() {
+		return internalIP;
 	}
 
-	public void setIsRegistered(boolean isRegistered) {
-		this.isRegistered = isRegistered;
+	public void setInternalIP(String internalIP) {
+		this.internalIP = internalIP;
 	}
-
 }

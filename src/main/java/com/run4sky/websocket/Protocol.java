@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.run4sky.beans.ClienService;
-import com.run4sky.beans.ClientLocation;
 import com.run4sky.beans.ConnectionLogs;
+import com.run4sky.beans.DispLocation;
 import com.run4sky.beans.ExternalDisp;
 import com.run4sky.beans.InsernalService;
 import com.run4sky.beans.SecureDisp;
@@ -103,7 +103,8 @@ public class Protocol {
 	
 	public static <T> void registerClientLocation(Object object, JsonObject jsonMessage, String mac) {
 		String publicIP = jsonMessage.get("public ip").getAsString();
-		int clientId;
+		String privateIP = jsonMessage.get("private ip").getAsString();
+		int deviceId;
 		Class clazz = object.getClass();
 		GenericDAO dao = new GenericDAO();
 		Object device = null;
@@ -113,11 +114,12 @@ public class Protocol {
 		}
 		try {
 			Method getId = device.getClass().getMethod("getId", null);
-			clientId = (int) getId.invoke(device, null);
-			ClientLocation clientLocation = new ClientLocation();
-			clientLocation.setClientId(clientId);
-			clientLocation.setClientIpext(publicIP);
-			dao.merge(clientLocation);
+			deviceId = (int) getId.invoke(device, null);
+			DispLocation dispLocation = new DispLocation();
+			dispLocation.setDispId(deviceId);
+			dispLocation.setExternalIP(publicIP);
+			dispLocation.setInternalIP(privateIP);
+			dao.merge(dispLocation);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

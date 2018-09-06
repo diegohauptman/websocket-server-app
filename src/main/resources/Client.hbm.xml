@@ -12,8 +12,5 @@
         <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
             <column length="300" name="Description" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="isRegistered" optimistic-lock="true" type="boolean" unique="false">
-            <column length="300" name="isRegistered"/>
-        </property>
     </class>
 </hibernate-mapping>

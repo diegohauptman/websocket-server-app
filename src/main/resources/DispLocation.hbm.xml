@@ -9,11 +9,11 @@
         <property generated="never" lazy="false" name="dispId" optimistic-lock="true" type="int" unique="false">
             <column name="DispID" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="ip" optimistic-lock="true" type="string" unique="false">
-            <column length="300" name="IP" not-null="true"/>
+        <property generated="never" lazy="false" name="externalIP" optimistic-lock="true" type="string" unique="false">
+            <column length="300" name="externalIP" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="isRegistered" optimistic-lock="true" type="boolean" unique="false">
-            <column length="300" name="isRegistered"/>
+        <property generated="never" lazy="false" name="internalIP" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="internalIP" not-null="false"/>
         </property>
     </class>
 </hibernate-mapping>
