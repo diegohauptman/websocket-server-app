@@ -1,7 +1,9 @@
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/beans/ExternalDisp.java
+/Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/entities/DeviceLocation.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/websocket/Protocol.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/websocket/ServerConfigurator.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/json/JsonDecoder.java
+/Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/entities/DeviceType.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/network/GetPublicIP.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/json/JsonEncoder.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/main/Main.java
@@ -12,6 +14,7 @@
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/websocket/WSServer.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/websocket/SessionHandler.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/queries/GenericDAO.java
+/Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/entities/Device.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/beans/InsernalService.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/beans/ConnectionLogs.java
 /Users/mundakamacbook/Desktop/Developer/Run4Sky/PuntoCeroServerMaven/src/main/java/com/run4sky/beans/ClienService.java

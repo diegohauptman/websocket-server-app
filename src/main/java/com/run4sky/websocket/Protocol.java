@@ -117,8 +117,8 @@ public class Protocol {
 			deviceId = (int) getId.invoke(device, null);
 			DispLocation dispLocation = new DispLocation();
 			dispLocation.setDispId(deviceId);
-			dispLocation.setExternalIP(publicIP);
-			dispLocation.setInternalIP(privateIP);
+			dispLocation.setExternalIp(publicIP);
+			dispLocation.setInternalIp(privateIP);
 			dao.merge(dispLocation);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
