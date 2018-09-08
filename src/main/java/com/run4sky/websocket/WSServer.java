@@ -144,6 +144,7 @@ public class WSServer {
 	public void onClose(Session session, CloseReason closeReason) {
 		
 		stopConnectionTime = LocalDateTime.now();
+		//gaurda el log de la duracion de la conexion del dispositivo en la BBDD.
 		Protocol.saveConnectionLog(mac, durationConnection());
 		System.out.println("Server onClose --> Session: " + session.getId() + " cerrando...");
 		sessionHandler.removeSession(session, deviceTypeString);
