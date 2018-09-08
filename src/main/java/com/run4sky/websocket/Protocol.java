@@ -125,7 +125,12 @@ public class Protocol {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Registra en la base de datos la duracion de la conexion del dispositivo.
+	 * Este metodo es usado en onClose de la clase WSServer.
+	 * @param mac
+	 * @param durationConnection
+	 */
 	public static void saveConnectionLog(String mac, Long durationConnection) {
 		GenericDAO dao = new GenericDAO();
 		ConnectionLogs connectionLog = new ConnectionLogs();
