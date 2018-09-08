@@ -120,7 +120,6 @@ public class WSServer {
 			Protocol.registerClientLocation(deviceObject, jsonMessage, mac);
 			deviceTypeString = deviceObject.getClass().getName();
 			logger.info("\nSession: " + session.getId() + "\nDeviceType: " + deviceTypeString);
-			//Protocol.connectionLog(mac);
 			session.getUserProperties().put(deviceTypeString, session);
 			sessionHandler.addSession(deviceTypeString, session);
 			sendJsonMessage(deviceTypeString);
