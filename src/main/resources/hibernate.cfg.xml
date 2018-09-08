@@ -11,13 +11,13 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping resource="/ConnectionLogs.hbm.xml"/>
-        <mapping resource="/ClienService.hbm.xml"/>
-        <mapping resource="/Client.hbm.xml"/>
-        <mapping resource="/ClientLocation.hbm.xml"/>
-        <mapping resource="/DispLocation.hbm.xml"/>
-        <mapping resource="/ExternalDisp.hbm.xml"/>
-        <mapping resource="/InsernalService.hbm.xml"/>
-        <mapping resource="/SecureDisp.hbm.xml"/>
+        <mapping class="com.run4sky.beans1.ConnectionLogs"/>
+        <mapping class="com.run4sky.beans1.ClienService"/>
+        <mapping class="com.run4sky.beans1.ExternalDisp"/>
+        <mapping class="com.run4sky.beans1.InsernalService"/>
+        <mapping class="com.run4sky.beans1.SecureDisp"/>
+        <mapping class="com.run4sky.beans1.ClientLocation"/>
+        <mapping class="com.run4sky.beans1.Client"/>
+        <mapping class="com.run4sky.beans1.DispLocation"/>
     </session-factory>
 </hibernate-configuration>
