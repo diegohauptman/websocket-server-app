@@ -1,5 +1,5 @@
 package com.run4sky.beans;
-// Generated Sep 8, 2018, 3:45:43 PM by Hibernate Tools 5.2.11.Final
+// Generated Sep 8, 2018, 7:30:52 PM by Hibernate Tools 5.2.11.Final
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -21,7 +21,7 @@ public class ConnectionLogs implements java.io.Serializable {
 	private Integer id;
 	private String mac;
 	private LocalDateTime connectionTime;
-	private Long durationConnection;
+	private long durationConnection;
 
 	public ConnectionLogs() {
 	}
@@ -30,7 +30,7 @@ public class ConnectionLogs implements java.io.Serializable {
 		this.connectionTime = connectionTime;
 	}
 
-	public ConnectionLogs(String mac, LocalDateTime connectionTime, Long durationConnection) {
+	public ConnectionLogs(String mac, LocalDateTime connectionTime, long durationConnection) {
 		this.mac = mac;
 		this.connectionTime = connectionTime;
 		this.durationConnection = durationConnection;
@@ -68,11 +68,11 @@ public class ConnectionLogs implements java.io.Serializable {
 	}
 
 	@Column(name = "durationConnection", length = 16777215)
-	public Long getDurationConnection() {
+	public long getDurationConnection() {
 		return this.durationConnection;
 	}
 
-	public void setDurationConnection(Long durationConnection) {
+	public void setDurationConnection(long durationConnection) {
 		this.durationConnection = durationConnection;
 	}
 

@@ -1,5 +1,5 @@
 package com.run4sky.beans;
-// Generated Sep 8, 2018, 3:45:43 PM by Hibernate Tools 5.2.11.Final
+// Generated Sep 8, 2018, 7:30:52 PM by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

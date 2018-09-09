@@ -1,5 +1,5 @@
 package com.run4sky.beans;
-// Generated Sep 8, 2018, 3:45:43 PM by Hibernate Tools 5.2.11.Final
+// Generated Sep 8, 2018, 7:30:52 PM by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,12 +20,12 @@ public class ClienService implements java.io.Serializable {
 	private String ram;
 	private String so;
 	private int ncpu;
-	private boolean isRegistered;
+	private String isRegistered;
 
 	public ClienService() {
 	}
 
-	public ClienService(int id, String mac, String cpu, String ram, String so, int ncpu, boolean isRegistered) {
+	public ClienService(int id, String mac, String cpu, String ram, String so, int ncpu, String isRegistered) {
 		this.id = id;
 		this.mac = mac;
 		this.cpu = cpu;
@@ -92,11 +92,11 @@ public class ClienService implements java.io.Serializable {
 	}
 
 	@Column(name = "isRegistered", nullable = false, length = 300)
-	public boolean getIsRegistered() {
+	public String getIsRegistered() {
 		return this.isRegistered;
 	}
 
-	public void setIsRegistered(boolean isRegistered) {
+	public void setIsRegistered(String isRegistered) {
 		this.isRegistered = isRegistered;
 	}
 
